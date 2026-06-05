@@ -103,29 +103,49 @@ function App() {
   const Enrolled = student.filter((t) => t.isEnrolled).length;
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search by name"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        style={{ marginRight: 8 }}
-      />
+    <main className="app-shell">
+      <section className="hero">
+        <p className="eyebrow">Student Directory</p>
+        <h1>Class roster</h1>
+        <p className="subtitle">
+          Search students, filter by status, and update enrollment with one
+          click.
+        </p>
 
-      {tags.map((f) => (
-        <button key={f} onClick={() => setFilter(f)}>
-          {f}
-        </button>
-      ))}
+        <div className="toolbar">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search by name"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
 
-      <p>
-        {Enrolled} student enrolled out of {student.length} total{" "}
-      </p>
+          <div className="filter-group">
+            {tags.map((f) => (
+              <button
+                key={f}
+                className={`filter-btn ${filter === f ? "active" : ""}`}
+                onClick={() => setFilter(f)}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      {visible.map((s) => (
-        <StudentCard key={s.id} student={s} onToggle={toggleEnrollment} />
-      ))}
-    </div>
+        <p className="summary">
+          <strong>{Enrolled}</strong> enrolled out of{" "}
+          <strong>{student.length}</strong> students
+        </p>
+      </section>
+
+      <section className="student-grid">
+        {visible.map((s) => (
+          <StudentCard key={s.id} student={s} onToggle={toggleEnrollment} />
+        ))}
+      </section>
+    </main>
   );
 }
 
